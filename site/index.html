@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Adoptable Dogs | The Labelle Foundation</title>
+  <meta name="description" content="Meet the adoptable dogs of The Labelle Foundation, a 501(c)(3) dog rescue in Los Angeles.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="demo-banner">
+    Demo preview: Rome, Cosmides &amp; Mr. Lemon are real Labelle dogs; the others are examples with placeholder photos.
+    <a href="how-it-works.html">How it works →</a>
+  </div>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="index.html">
+        <span class="brand-mark" aria-hidden="true">🐾</span>
+        <span class="brand-name">The Labelle Foundation <small>Los Angeles Dog Rescue</small></span>
+      </a>
+      <nav class="nav">
+        <a href="index.html" aria-current="page">Adoptable Dogs</a>
+        <a href="how-it-works.html">How It Works</a>
+        <a href="https://labellefoundation.org/adopt/" target="_blank" rel="noopener">Apply</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="app">
+    <!-- List view -->
+    <section id="list-view">
+      <div class="hero">
+        <div class="wrap">
+          <h1>Find your new best friend</h1>
+          <p>Every dog here is safe in a loving foster home and waiting for a family of their own. This page updates automatically from our Instagram.</p>
+        </div>
+      </div>
+
+      <div class="wrap">
+        <form class="filters" id="filters" role="search" onsubmit="return false">
+          <div class="field">
+            <label for="q">Search</label>
+            <input id="q" type="search" placeholder="Name, breed, or personality…" autocomplete="off">
+          </div>
+          <div class="field">
+            <label for="age">Age</label>
+            <select id="age">
+              <option value="">Any age</option>
+              <option>Puppy</option><option>Young</option><option>Adult</option><option>Senior</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="size">Size (grown)</label>
+            <select id="size">
+              <option value="">Any size</option>
+              <option>Small</option><option>Medium</option><option>Large</option><option>XL</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="sex">Gender</label>
+            <select id="sex">
+              <option value="">Any</option>
+              <option>Female</option><option>Male</option>
+            </select>
+          </div>
+        </form>
+
+        <div class="results-bar">
+          <h2>Adoptable dogs</h2>
+          <span class="count" id="count" aria-live="polite"></span>
+        </div>
+        <div class="grid" id="grid"></div>
+
+        <section class="happy-tails" id="happy-tails" hidden>
+          <div class="results-bar"><h2>Happy tails 🎉</h2><span class="count">Recently adopted</span></div>
+          <div class="grid" id="adopted-grid"></div>
+        </section>
+      </div>
+    </section>
+
+    <!-- Detail view -->
+    <section id="detail-view" class="detail" hidden>
+      <div class="wrap" id="detail"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <span>The Labelle Foundation · A California registered 501(c)(3) · Los Angeles</span>
+      <span id="updated"></span>
+    </div>
+  </footer>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

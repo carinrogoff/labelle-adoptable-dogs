@@ -1,0 +1,11 @@
+{
+  "name": "labelle-adopt",
+  "private": true,
+  "type": "module",
+  "description": "Adoptable dogs site that updates itself from The Labelle Foundation's Instagram posts (demo)",
+  "scripts": {
+    "sync": "node scripts/sync.mjs",
+    "test": "node --test scripts/*.test.mjs",
+    "dev": "python3 -m http.server 8080 --directory site"
+  }
+}

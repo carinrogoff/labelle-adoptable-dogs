@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>How It Works | Labelle Adoptable Dogs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .pitch { padding: 8px 0 40px; }
+    .pitch h2 { font-family: var(--serif); font-weight: 600; font-size: 28px; margin: 48px 0 8px; }
+    .pitch .lede { color: var(--muted); max-width: 680px; margin: 0 0 20px; }
+    .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; counter-reset: step; }
+    .step { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; position: relative; }
+    .step::before {
+      counter-increment: step; content: counter(step);
+      display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%;
+      background: var(--green); color: #fff; font-weight: 600; font-size: 14px; margin-bottom: 10px;
+    }
+    .step h3 { margin: 0 0 4px; font-size: 16px; }
+    .step p { margin: 0; color: var(--muted); font-size: 14.5px; }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .panel { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; }
+    .panel h3 { margin: 0 0 10px; font-family: var(--serif); font-size: 20px; font-weight: 600; }
+    .panel ul { margin: 0; padding-left: 20px; }
+    .panel li { margin: 6px 0; }
+    .panel code { background: #f0e8d8; padding: 1px 6px; border-radius: 5px; font-size: 14px; }
+    .tester { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
+    .tester textarea {
+      width: 100%; min-height: 420px; resize: vertical; padding: 14px;
+      border: 1px solid var(--line); border-radius: var(--radius); background: #fff;
+      font: 14px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    .tester textarea:focus { outline: 2px solid var(--tan); outline-offset: 1px; }
+    .result { min-height: 420px; }
+    .result .card-name { font-size: 26px; }
+    .result .facts { margin-top: 14px; }
+    .result .none { color: var(--muted); padding: 40px 0; text-align: center; }
+    .status { display: inline-block; margin-top: 6px; }
+    .examples { display: flex; gap: 8px; flex-wrap: wrap; margin: 0 0 12px; }
+    .cost td, .cost th { text-align: left; padding: 8px 12px 8px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+    .cost { border-collapse: collapse; width: 100%; font-size: 15px; }
+    @media (max-width: 900px) {
+      .steps { grid-template-columns: 1fr 1fr; }
+      .two-col, .tester { grid-template-columns: 1fr; }
+      .tester textarea, .result { min-height: 260px; }
+    }
+    @media (max-width: 520px) { .steps { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="index.html">
+        <span class="brand-mark" aria-hidden="true">🐾</span>
+        <span class="brand-name">The Labelle Foundation <small>Los Angeles Dog Rescue</small></span>
+      </a>
+      <nav class="nav">
+        <a href="index.html">Adoptable Dogs</a>
+        <a href="how-it-works.html" aria-current="page">How It Works</a>
+        <a href="https://labellefoundation.org/adopt/" target="_blank" rel="noopener">Apply</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="hero">
+    <div class="wrap">
+      <h1>An adoptable-dogs page that keeps itself up to date</h1>
+      <p>Keep posting on Instagram exactly the way you do now. Every new “Meet…” post becomes a searchable dog profile on the website, with no extra work for the team.</p>
+    </div>
+  </div>
+
+  <main class="wrap pitch">
+    <h2>How it works</h2>
+    <div class="steps">
+      <div class="step"><h3>You post on Instagram</h3><p>Same “🐾 Meet …” captions and “✨ The Important Stuff” you already write.</p></div>
+      <div class="step"><h3>The site checks hourly</h3><p>It reads new posts and ignores anything that isn’t a dog profile (fundraisers, events, etc.).</p></div>
+      <div class="step"><h3>Captions become profiles</h3><p>Name, age, breed, size, gender, foster’s notes, ideal home, and rescue story, plus the photos.</p></div>
+      <div class="step"><h3>Adopters find their match</h3><p>They can filter by age, size, and gender, then go straight to your adoption application.</p></div>
+    </div>
+
+    <h2>Try it with any caption</h2>
+    <p class="lede">Paste a caption from any Labelle post on the left. The right side shows the profile the website would create from it, updating as you type.</p>
+    <div class="examples" id="examples"></div>
+    <div class="tester">
+      <textarea id="caption" spellcheck="false" aria-label="Instagram caption"></textarea>
+      <div class="panel result" id="result" aria-live="polite"></div>
+    </div>
+
+    <h2>What the team would do</h2>
+    <div class="two-col">
+      <div class="panel">
+        <h3>Nothing new day to day</h3>
+        <ul>
+          <li>Keep starting adoptable-dog posts with <code>Meet [name]</code> and the <code>The Important Stuff</code> section.</li>
+          <li>When a dog is adopted, either add <code>ADOPTED</code> to the top of their caption, or post an update that says <code>ADOPTED</code> and names them. The dog moves to “Happy tails” automatically.</li>
+          <li><code>FOSTER NEEDED</code> in a caption adds a “Foster needed” badge and a foster application button.</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h3>One-time setup (about 10 minutes)</h3>
+        <ul>
+          <li>Someone with the Instagram login clicks “Allow” once, giving the website <strong>read-only</strong> access to posts. It can’t post, comment, or see DMs.</li>
+          <li>Access renews automatically and can be revoked anytime in Instagram settings.</li>
+          <li>Link the page from the link in bio and the website’s Adopt page, or host it at <code>adopt.labellefoundation.org</code>.</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>Cost</h2>
+    <table class="cost">
+      <tr><th>Hosting</th><td>$0: free static hosting (Netlify, Vercel, or GitHub Pages)</td></tr>
+      <tr><th>Instagram access</th><td>$0: Instagram’s official API</td></tr>
+      <tr><th>Maintenance</th><td>Built and maintained by a volunteer</td></tr>
+    </table>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap"><span>Demo built by a Labelle foster volunteer</span><a href="index.html">See the demo site →</a></div>
+  </footer>
+
+  <script type="module">
+    import { parseCaption } from './js/parse-caption.js';
+    import samples from './js/sample-captions.js';
+
+    const $ = (s) => document.querySelector(s);
+    const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+    const statusBadge = { available: '<span class="badge new">Available</span>', pending: '<span class="badge pending">Adoption pending</span>', adopted: '<span class="badge adopted">Adopted</span>' };
+
+    function render() {
+      const dog = parseCaption($('#caption').value);
+      if (!dog) {
+        $('#result').innerHTML = '<p class="none">Not a dog profile, so this post would be skipped.<br><small>Profiles start with “Meet [name]” and include The Important Stuff.</small></p>';
+        return;
+      }
+      const facts = [['Gender', dog.sex], ['Age', dog.age && `${dog.age}${dog.ageGroup ? ` (${dog.ageGroup})` : ''}`], ['Breed / Mix', dog.breed], ['Size (grown)', dog.size], ['Weight', dog.weight], ['Vibe', dog.vibe], ['Good with', dog.goodWith], ...Object.entries(dog.extraFacts)].filter(([, v]) => v);
+      const sections = [["Foster's note", dog.fosterNote], ['Ideal home', dog.idealHome], ['Rescue story', dog.rescueStory], ['Medical', dog.medical], ...dog.otherSections.map((s) => [s.title, s.body])].filter(([, v]) => v);
+      $('#result').innerHTML = `
+        <h3 class="card-name">${esc(dog.name)}</h3>
+        <span class="status">${statusBadge[dog.status]}${dog.needsFoster ? ' <span class="badge foster">Foster needed</span>' : ''}</span>
+        <dl class="facts">${facts.map(([k, v]) => `<div class="fact"><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>
+        ${sections.map(([t, b]) => `<div class="section"><h2>${esc(t)}</h2><p>${esc(b.length > 220 ? b.slice(0, 220) + '…' : b)}</p></div>`).join('')}`;
+    }
+
+    $('#examples').innerHTML = samples.map((s, i) => `<button class="btn btn-ghost btn-small" data-i="${i}">${esc(s.label)}</button>`).join('');
+    $('#examples').addEventListener('click', (e) => {
+      const i = e.target.dataset.i;
+      if (i == null) return;
+      $('#caption').value = samples[i].caption;
+      render();
+    });
+    $('#caption').value = samples[0].caption;
+    $('#caption').addEventListener('input', render);
+    render();
+  </script>
+</body>
+</html>

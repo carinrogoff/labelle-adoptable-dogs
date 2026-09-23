@@ -1,0 +1,76 @@
+# Publishes site/ to GitHub Pages. Once the IG_ACCESS_TOKEN repo secret is set
+# (see README "Going live"), it also pulls new Instagram posts every hour first.
+name: Sync and deploy
+
+on:
+  schedule:
+    - cron: '17 * * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: sync
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    env:
+      IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+    steps:
+      # Until Instagram is connected there's nothing new to publish on the hourly runs.
+      - name: Skip hourly runs until Instagram is connected
+        id: gate
+        run: |
+          if [ -z "$IG_ACCESS_TOKEN" ] && [ "${{ github.event_name }}" = "schedule" ]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.gate.outputs.skip != 'true'
+      - uses: actions/setup-node@v4
+        if: steps.gate.outputs.skip != 'true'
+        with:
+          node-version: 22
+      - run: npm test
+        if: steps.gate.outputs.skip != 'true'
+
+      - name: Refresh Instagram token (tokens last 60 days; refreshing keeps it alive)
+        if: env.IG_ACCESS_TOKEN != ''
+        run: |
+          curl -sf "https://graph.instagram.com/refresh_access_token?grant_type=ig_refresh_token&access_token=$IG_ACCESS_TOKEN" > /dev/null \
+            || echo "::warning::Token refresh failed. Re-authorize if this keeps happening."
+
+      - name: Pull new posts from Instagram
+        if: env.IG_ACCESS_TOKEN != ''
+        run: node scripts/sync.mjs
+
+      - name: Commit updated dogs and photos
+        if: env.IG_ACCESS_TOKEN != ''
+        run: |
+          git config user.name "labelle-sync"
+          git config user.email "actions@users.noreply.github.com"
+          git add site/data site/img
+          if ! git diff --cached --quiet; then
+            git commit -m "Sync dogs from Instagram"
+            git push
+          fi
+
+      - uses: actions/configure-pages@v5
+        if: steps.gate.outputs.skip != 'true'
+      - uses: actions/upload-pages-artifact@v3
+        if: steps.gate.outputs.skip != 'true'
+        with:
+          path: site
+      - uses: actions/deploy-pages@v4
+        if: steps.gate.outputs.skip != 'true'
+        id: deployment
