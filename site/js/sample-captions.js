@@ -7,5 +7,5 @@ export default [
   { label: 'Cosmides', caption: caption('sample-cosmides') },
   { label: 'Rome', caption: caption('sample-rome') },
   { label: 'Mr. Lemon', caption: caption('sample-mr-lemon') },
-  { label: 'Adopted update', caption: 'ADOPTED 🎉\n' + caption('sample-mr-lemon') },
+  { label: 'Adopted update', caption: '‼️ADOPTED‼️ ' + caption('sample-mr-lemon') },
 ];

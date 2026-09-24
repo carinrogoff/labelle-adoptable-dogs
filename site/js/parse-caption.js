@@ -117,11 +117,11 @@ export function parseCaption(caption) {
   if (!caption) return null;
   const lines = caption.split(/\r?\n/).map(clean).filter(Boolean);
 
-  // Name: first "Meet X" line.
+  // Name: first "Meet X" line. "Meet" may follow a tag Labelle adds later, e.g. "‼️ADOPTED‼️ 🐾 Meet Rome".
   let name = null;
   let start = 0;
   for (let i = 0; i < Math.min(lines.length, 4); i++) {
-    const m = /^meet\s+(.+?)[\s!.]*$/i.exec(lines[i].replace(LEADING_JUNK, ''));
+    const m = /(?:^|[^\p{L}])meet\s+(.+?)[\s!.]*$/iu.exec(lines[i]);
     if (m) { name = m[1].trim(); start = i + 1; break; }
   }
   if (!name) return null;

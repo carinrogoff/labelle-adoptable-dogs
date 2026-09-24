@@ -37,6 +37,18 @@ test('adoption status', () => {
   assert.equal(parseCaption(story + '\n#adopted').status, 'adopted');
 });
 
+test("Labelle's ‼️ADOPTED‼️ edit at the start of the caption", () => {
+  const rome = caption('sample-rome');
+  for (const edited of ['‼️ADOPTED‼️\n' + rome, '‼️ADOPTED‼️ ' + rome, '‼️ADOPTED‼️' + rome]) {
+    const dog = parseCaption(edited);
+    assert.equal(dog?.name, 'Rome');
+    assert.equal(dog.status, 'adopted');
+  }
+  // An edited caption replaces the original on the next sync: same post id, new text.
+  const { dogs } = buildDogs([{ id: 'rome', timestamp: '2026-09-18', caption: '‼️ADOPTED‼️ ' + rome }]);
+  assert.equal(dogs[0].status, 'adopted');
+});
+
 test('a later ADOPTED announcement marks the dog adopted', () => {
   const { dogs } = buildDogs(posts);
   assert.equal(dogs.find((d) => d.name === 'Waffles').status, 'adopted');

@@ -30,7 +30,7 @@ variations seen so far: bullets or none, "Breed" vs "Breed/Mix", "Estimated Adul
 
 | In the caption | On the site |
 | --- | --- |
-| `ADOPTED` (all caps), `#adopted`, or a line starting "Adopted" | Moves to "Happy tails" |
+| `‼️ADOPTED‼️` at the start of the caption (Labelle's usual edit), any all-caps `ADOPTED`, `#adopted`, or a line starting "Adopted" | Moves to "Happy tails" at the next hourly sync |
 | A later post saying `ADOPTED` that names the dog | Same |
 | `adoption pending` / `PENDING` | "Adoption pending" badge |
 | `FOSTER NEEDED` | "Foster needed" badge and a foster application button |
